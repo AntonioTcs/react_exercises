@@ -1,6 +1,7 @@
-import { ClickTracker } from "./App";
-import ReactDOM from "react-dom";
+import { Colors } from "./App";
+import reactDOM from "react-dom";
 
-let rootElement = document.querySelector("#root");
+const rootElement = document.getElementById("root");
+const colors = ["Blue", "Red", "Yellow", "Pink", "Violet"];
 
-ReactDOM.render(<ClickTracker initialValue={0} />, rootElement);
+reactDOM.render(<Colors colorsArray={colors} />, rootElement);
