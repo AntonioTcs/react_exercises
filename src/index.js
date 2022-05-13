@@ -1,4 +1,15 @@
-import App from "./App";
-import reactDOM from "react-dom";
+import react from "react";
+import ReactDOM from "react-dom";
 
-reactDOM.render(App(), document.querySelector("#root"));
+class Hello extends react.Component {
+  render() {
+    return (
+      <div>
+        <h1>Hello</h1>
+        <p>What a beautiful day!</p>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Hello />, document.querySelector("#root"));
