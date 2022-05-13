@@ -1,7 +1,7 @@
-import Greets from "./App";
+import Counter from "./App";
 import ReactDOM from "react-dom";
 
 ReactDOM.render(
-  <Greets name="John" age={21} />,
+  <Counter initialCountValue={0} incrementValue={2} timerValue={1000} />,
   document.querySelector("#root")
 );

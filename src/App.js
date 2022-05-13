@@ -1,26 +1,26 @@
 import React from "react";
 
-class Greets extends React.Component {
+class Counter extends React.Component {
+  state = {
+    count: this.props.initialCountValue,
+  };
+  componentDidMount() {
+    setInterval(() => {
+      this.setState((state) => {
+        return {
+          count: state.count + this.props.incrementValue,
+        };
+      });
+    }, this.props.timerValue);
+  }
   render() {
-    return (
-      <div>
-        <p>
-          Welcome,
-          {this.props.name ? (
-            <strong> {this.props.name}</strong>
-          ) : (
-            <strong>Franco</strong>
-          )}
-        </p>
-        <Age age={this.props.age} />
-      </div>
-    );
+    return <DisplayCounter count={this.state.count} />;
   }
 }
 
-class Age extends React.Component {
+class DisplayCounter extends React.Component {
   render() {
-    return <p>Your age is {this.props.age}</p>;
+    return <h1>Count: {this.props.count}</h1>;
   }
 }
-export default Greets;
+export default Counter;
