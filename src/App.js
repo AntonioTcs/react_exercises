@@ -1,25 +1,24 @@
-import React from "react";
+import react from "react";
 
-class Counter extends React.Component {
+export class ClickCounter extends react.Component {
   state = {
-    count: this.props.initialCountValue,
+    count: this.props.initialValue,
   };
 
-  constructor(props) {
-    super(props);
-
-    setInterval(() => {
-      this.setState((state) => {
-        return {
-          count: state.count + this.props.incrementValue,
-        };
-      });
-    }, this.props.timerValue);
-  }
+  clickEventHandler = (event) => {
+    this.setState((state) => {
+      return {
+        count: state.count + 1,
+      };
+    });
+  };
 
   render() {
-    return <h1>Count: {this.state.count}</h1>;
+    return (
+      <div>
+        <h1>Count: {this.state.count}</h1>
+        <button onClick={this.clickEventHandler}>Click!</button>
+      </div>
+    );
   }
 }
-
-export default Counter;
