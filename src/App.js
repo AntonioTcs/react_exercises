@@ -1,14 +1,14 @@
 import react from "react";
 
-export class ClickCounter extends react.Component {
+export class ClickTracker extends react.Component {
   state = {
-    count: this.props.initialValue,
+    lastClick: "None",
   };
 
   clickEventHandler = (event) => {
     this.setState((state) => {
       return {
-        count: state.count + 1,
+        lastClick: event.target.id,
       };
     });
   };
@@ -16,19 +16,16 @@ export class ClickCounter extends react.Component {
   render() {
     return (
       <div>
-        <h1>Count: {this.state.count}</h1>
-        <CounterButton func={this.clickEventHandler} />
-      </div>
-    );
-  }
-}
-
-class CounterButton extends react.Component {
-  render() {
-    return (
-      <div>
-        {/* <h1>Count: {ClickCounter.state.count} </h1> */}
-        <button onClick={this.func}>Click!</button>
+        <h1>Button: {this.state.lastClick}</h1>
+        <button id="one" onClick={this.clickEventHandler}>
+          Click!
+        </button>
+        <button id="two" onClick={this.clickEventHandler}>
+          Click!
+        </button>
+        <button id="three" onClick={this.clickEventHandler}>
+          Click!
+        </button>
       </div>
     );
   }
