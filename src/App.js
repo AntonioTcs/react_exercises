@@ -24,12 +24,28 @@ export class TodoList extends React.Component {
     });
   };
 
+  RemoveBtnHandler = (event) => {
+    const index = event.target.id;
+    let newArray = this.state.items;
+
+    newArray.splice(index, 1);
+
+    this.setState({
+      items: newArray,
+    });
+  };
+
   render() {
     return (
       <div>
         <ul>
           {this.state.items.map((item, index) => (
-            <li key={index}>{item}</li>
+            <div>
+              <li key={index}>{item}</li>
+              <button id={index} onClick={this.RemoveBtnHandler}>
+                Remove
+              </button>
+            </div>
           ))}
         </ul>
 
