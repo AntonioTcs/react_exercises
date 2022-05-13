@@ -9,10 +9,10 @@ class Greets extends React.Component {
           {this.props.name ? (
             <strong> {this.props.name}</strong>
           ) : (
-            <strong>Franco</strong>
+            <strong> Franco</strong>
           )}
         </p>
-        <Age age={this.props.age} />
+        {this.props.name === "John" ? <Age age={this.props.age} /> : null}
       </div>
     );
   }
