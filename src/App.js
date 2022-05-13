@@ -1,31 +1,14 @@
 import react from "react";
 
-export class ClickTracker extends react.Component {
-  state = {
-    lastClick: "None",
-  };
-
-  clickEventHandler = (event) => {
-    this.setState((state) => {
-      return {
-        lastClick: event.target.id,
-      };
-    });
-  };
-
+export class Colors extends react.Component {
   render() {
     return (
       <div>
-        <h1>Button: {this.state.lastClick}</h1>
-        <button id="one" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="two" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="three" onClick={this.clickEventHandler}>
-          Click!
-        </button>
+        <ul>
+          {this.props.colorsArray.map((color) => (
+            <li key={color.id}>{color.name}</li>
+          ))}
+        </ul>
       </div>
     );
   }
