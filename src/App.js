@@ -2,29 +2,8 @@ import React from "react";
 
 class Greets extends React.Component {
   render() {
-    return (
-      <div>
-        <p>
-          Welcome,
-          {this.props.name ? (
-            <strong> {this.props.name}</strong>
-          ) : (
-            <strong>Franco</strong>
-          )}
-        </p>
-        <Age age={this.props.age} />
-      </div>
-    );
+    return <p>Welcome, {this.props.name}</p>;
   }
 }
 
-class Age extends React.Component {
-  render() {
-    return this.props.age > 18 ? (
-      <p>Your age is {this.props.age}</p>
-    ) : (
-      <p>You are very young!</p>
-    );
-  }
-}
 export default Greets;
