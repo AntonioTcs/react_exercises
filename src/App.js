@@ -1,31 +1,36 @@
-import react from "react";
-
-export class ClickTracker extends react.Component {
+import React from "react";
+export class TodoList extends React.Component {
   state = {
-    lastClick: "None",
+    items: ["Buy Chocolate", "Jogging", "Study"],
   };
 
-  clickEventHandler = (event) => {
-    this.setState((state) => {
-      return {
-        lastClick: event.target.id,
-      };
+  SubmitEventHandler = (event) => {
+    event.preventDefault();
+
+    const newItem = event.target.elements.todoElement.value;
+    const stateArray = this.state.items;
+    stateArray.push(newItem);
+
+    this.setState({
+      items: stateArray,
     });
+
+    event.target.elements.todoElement.value = "";
   };
 
   render() {
     return (
       <div>
-        <h1>Button: {this.state.lastClick}</h1>
-        <button id="one" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="two" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="three" onClick={this.clickEventHandler}>
-          Click!
-        </button>
+        <ul>
+          {this.state.items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+
+        <form onSubmit={this.SubmitEventHandler}>
+          <input name="todoElement" />
+          <button>Add To List</button>
+        </form>
       </div>
     );
   }

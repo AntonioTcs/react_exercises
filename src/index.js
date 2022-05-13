@@ -1,6 +1,6 @@
-import { ClickTracker } from "./App";
-import ReactDOM from "react-dom";
+import { TodoList } from "./App";
+import reactDOM from "react-dom";
 
-let rootElement = document.querySelector("#root");
+const rootElement = document.getElementById("root");
 
-ReactDOM.render(<ClickTracker initialValue={0} />, rootElement);
+reactDOM.render(<TodoList />, rootElement);
