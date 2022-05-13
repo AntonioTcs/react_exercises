@@ -1,10 +1,14 @@
-import React from "react";
-import ReactDom from "react-dom";
+import react from "react";
+import ReactDOM from "react-dom";
 
-class HelloWorld extends React.Component {
+class HelloInDiv extends react.Component {
   render() {
-    return <h1>Hello, World!</h1>;
+    return (
+      <div>
+        <h1>Hello!</h1>
+      </div>
+    );
   }
 }
 
-ReactDom.render(<HelloWorld />, document.querySelector("#root"));
+ReactDOM.render(<HelloInDiv />, document.querySelector("#root"));
