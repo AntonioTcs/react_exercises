@@ -1,16 +1,11 @@
 import react from "react";
 
+const ButtonClickHandler = (state) => {
+  console.log(state);
+};
 export class App extends react.Component {
-  ButtonClickHandler = (props) => {
-    const actState = {
-      username: props.username,
-      password: props.password,
-      remember: props.checked,
-    };
-    console.log(actState);
-  };
   render() {
-    return <Login onLogin={this.ButtonClickHandler} />;
+    return <Login onLogin={ButtonClickHandler} />;
   }
 }
 class Login extends react.Component {
@@ -62,9 +57,6 @@ class Login extends react.Component {
         <button
           disabled={this.state.bntEnable}
           onClick={this.props.ButtonClickHandler}
-          username={this.state.username}
-          password={this.state.password}
-          checked={this.state.remember}
         >
           Login
         </button>
