@@ -1,6 +1,6 @@
-import { Welcome } from "./App";
-import reactDOM from "react-dom";
+import { ClickCounter } from "./App";
+import ReactDOM from "react-dom";
 
-const rootElement = document.getElementById("root");
+let rootElement = document.querySelector("#root");
 
-reactDOM.render(<Welcome />, rootElement);
+ReactDOM.render(<ClickCounter initialValue={0} />, rootElement);
