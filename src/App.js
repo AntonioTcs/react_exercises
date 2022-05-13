@@ -20,7 +20,7 @@ class Greets extends React.Component {
 
 class Age extends React.Component {
   render() {
-    return this.props.age > 18 ? <p>Your age is {this.props.age}</p> : null;
+    return this.props.age ? <p>Your age is {this.props.age}</p> : null;
   }
 }
 export default Greets;
