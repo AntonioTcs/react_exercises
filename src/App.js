@@ -1,14 +1,14 @@
 import react from "react";
 
 export class App extends react.Component {
-  ButtonClickHandler(props) {
+  ButtonClickHandler = (props) => {
     const actState = {
       username: props.username,
       password: props.password,
       remember: props.checked,
     };
     console.log(actState);
-  }
+  };
   render() {
     return <Login onLogin={this.ButtonClickHandler} />;
   }
