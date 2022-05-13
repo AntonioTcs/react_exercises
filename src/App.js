@@ -9,10 +9,10 @@ class Greets extends React.Component {
           {this.props.name ? (
             <strong> {this.props.name}</strong>
           ) : (
-            <strong> Franco</strong>
+            <strong>Franco</strong>
           )}
         </p>
-        {this.props.name === "John" ? <Age age={this.props.age} /> : null}
+        <Age age={this.props.age} />
       </div>
     );
   }
@@ -20,9 +20,11 @@ class Greets extends React.Component {
 
 class Age extends React.Component {
   render() {
-    return this.props.age > 18 && this.props.age < 65 ? (
+    return this.props.age > 18 ? (
       <p>Your age is {this.props.age}</p>
-    ) : null;
+    ) : (
+      <p>You are very young!</p>
+    );
   }
 }
 export default Greets;
