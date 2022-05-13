@@ -1,31 +1,33 @@
 import react from "react";
 
-export class ClickTracker extends react.Component {
+export class InteractiveWelcome extends react.Component {
   state = {
-    lastClick: "None",
+    user: "",
   };
 
-  clickEventHandler = (event) => {
-    this.setState((state) => {
-      return {
-        lastClick: event.target.id,
-      };
+  InputChangeHandler = (event) => {
+    let userUp = event.target.value;
+
+    this.setState({
+      user: userUp,
     });
   };
 
   render() {
     return (
       <div>
-        <h1>Button: {this.state.lastClick}</h1>
-        <button id="one" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="two" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="three" onClick={this.clickEventHandler}>
-          Click!
-        </button>
+        <Welcome user={this.state.user} />
+        <input name="username" onChange={this.InputChangeHandler} />
+      </div>
+    );
+  }
+}
+
+class Welcome extends react.Component {
+  render() {
+    return (
+      <div>
+        <h1>Hello, {this.props.user}</h1>
       </div>
     );
   }
