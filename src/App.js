@@ -17,7 +17,18 @@ export class ClickCounter extends react.Component {
     return (
       <div>
         <h1>Count: {this.state.count}</h1>
-        <button onClick={this.clickEventHandler}>Click!</button>
+        <CounterButton func={this.clickEventHandler} />
+      </div>
+    );
+  }
+}
+
+class CounterButton extends react.Component {
+  render() {
+    return (
+      <div>
+        {/* <h1>Count: {ClickCounter.state.count} </h1> */}
+        <button onClick={this.func}>Click!</button>
       </div>
     );
   }
