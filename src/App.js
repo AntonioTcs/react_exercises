@@ -2,25 +2,24 @@ import React from "react";
 
 class Counter extends React.Component {
   state = {
-    count: this.props.initialCountValue,
+    count: 0,
   };
-  componentDidMount() {
+
+  constructor(props) {
+    super(props);
+
     setInterval(() => {
       this.setState((state) => {
         return {
-          count: state.count + this.props.incrementValue,
+          count: state.count + 1,
         };
       });
-    }, this.props.timerValue);
+    }, 1000);
   }
+
   render() {
-    return <DisplayCounter count={this.state.count} />;
+    return <h1>Count: {this.state.count}</h1>;
   }
 }
 
-class DisplayCounter extends React.Component {
-  render() {
-    return <h1>Count: {this.props.count}</h1>;
-  }
-}
 export default Counter;
