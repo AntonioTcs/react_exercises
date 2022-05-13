@@ -18,8 +18,13 @@ class Counter extends React.Component {
   }
 
   render() {
-    return <h1>Count: {this.state.count}</h1>;
+    return <DisplayCounter count={this.state.count} />;
   }
 }
 
+class DisplayCounter extends React.Component {
+  render() {
+    return <h1>Count: {this.props.count}</h1>;
+  }
+}
 export default Counter;
