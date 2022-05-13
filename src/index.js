@@ -1,6 +1,5 @@
-import { ClickTracker } from "./App";
+import { App } from "./App";
 import ReactDOM from "react-dom";
 
-let rootElement = document.querySelector("#root");
-
-ReactDOM.render(<ClickTracker initialValue={0} />, rootElement);
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
