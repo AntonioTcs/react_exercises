@@ -1,32 +1,24 @@
 import react from "react";
 
-export class ClickTracker extends react.Component {
-  state = {
-    lastClick: "None",
-  };
+export class UncontrolledLogin extends react.Component {
+  SubmitEvent = (event) => {
+    event.preventDefault();
 
-  clickEventHandler = (event) => {
-    this.setState((state) => {
-      return {
-        lastClick: event.target.id,
-      };
-    });
+    const user = event.target.elements.username.value;
+    const password = event.target.elements.password.value;
+    const remember = event.target.elements.remember.checked;
   };
 
   render() {
     return (
-      <div>
-        <h1>Button: {this.state.lastClick}</h1>
-        <button id="one" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="two" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-        <button id="three" onClick={this.clickEventHandler}>
-          Click!
-        </button>
-      </div>
+      <form onSubmit={this.SubmitEvent}>
+        <input name="username" autoFocus />
+        <input name="password" type="password" />
+        <input name="remember" type="checkbox" />
+
+        <button>Login</button>
+        <button type="reset">Reset</button>
+      </form>
     );
   }
 }
