@@ -18,6 +18,12 @@ export class TodoList extends React.Component {
     event.target.elements.todoElement.value = "";
   };
 
+  ResetBtnHandler = (event) => {
+    this.setState({
+      items: [],
+    });
+  };
+
   render() {
     return (
       <div>
@@ -30,6 +36,9 @@ export class TodoList extends React.Component {
         <form onSubmit={this.SubmitEventHandler}>
           <input name="todoElement" />
           <button>Add To List</button>
+          <button type="button" onClick={this.ResetBtnHandler}>
+            Reset
+          </button>
         </form>
       </div>
     );
