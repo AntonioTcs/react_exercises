@@ -12,10 +12,15 @@ class Greets extends React.Component {
             <strong>Franco</strong>
           )}
         </p>
-        <p>Your age is {this.props.age}</p>
+        <Age age={this.props.age} />
       </div>
     );
   }
 }
 
+class Age extends React.Component {
+  render() {
+    return <p>Your age is {this.props.age}</p>;
+  }
+}
 export default Greets;
