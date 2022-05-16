@@ -1,36 +1,46 @@
 import react from "react";
 
-const ButtonClickHandler = (state) => {
-  console.log(state);
-};
 export class App extends react.Component {
+  onLogin = (state) => {
+    console.log(state);
+  };
   render() {
-    return <Login onLogin={ButtonClickHandler} />;
+    return <Login onLogin={this.onLogin} />;
   }
 }
 class Login extends react.Component {
   state = {
-    username: "",
-    password: "",
-    remember: false,
+    login: {
+      username: "",
+      password: "",
+      remember: false,
+    },
     bntEnable: true,
   };
 
-  InputChangeHandler = (event) => {
+  inputChangeHandler = (event) => {
     const value = event.target.value;
     const name = event.target.name;
     const type = event.target.type;
     const check = event.target.checked;
 
-    this.setState({
-      [name]: type === "checkbox" ? check : value,
-    });
+    this.setState((prevState) => ({
+      ...prevState,
+      login: {
+        ...prevState.login,
+        [name]: type === "checkbox" ? check : value,
+      },
+    }));
 
-    if (this.state.username && this.state.password) {
+    if (this.state.login.username && this.state.login.password) {
       this.setState({
         bntEnable: false,
       });
     }
+  };
+
+  buttonClickHandler = () => {
+    this.props.onLogin(this.state.login);
   };
 
   render() {
@@ -38,25 +48,25 @@ class Login extends react.Component {
       <div>
         <input
           name="username"
-          value={this.state.username}
-          onChange={this.InputChangeHandler}
+          value={this.state.login.username}
+          onChange={this.inputChangeHandler}
         />
         <input
           name="password"
           type="password"
-          value={this.state.password}
-          onChange={this.InputChangeHandler}
+          value={this.state.login.password}
+          onChange={this.inputChangeHandler}
         />
         <input
           name="remember"
           type="checkbox"
-          checked={this.state.remember}
-          onChange={this.InputChangeHandler}
+          checked={this.state.login.remember}
+          onChange={this.inputChangeHandler}
         />
 
         <button
-          disabled={this.state.bntEnable}
-          onClick={this.props.ButtonClickHandler}
+          disabled={this.state.login.bntEnable}
+          onClick={this.buttonClickHandler}
         >
           Login
         </button>
