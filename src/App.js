@@ -1,79 +1,23 @@
 import react from "react";
+import "./main.css";
 
 export class App extends react.Component {
   onLogin = (state) => {
     console.log(state);
   };
   render() {
-    return <Login onLogin={this.onLogin} />;
+    return (
+      <Container>
+        <div>There is some content</div>
+      </Container>
+    );
   }
 }
-class Login extends react.Component {
-  state = {
-    login: {
-      username: "",
-      password: "",
-      remember: false,
-    },
-    bntEnable: true,
-  };
-
-  inputChangeHandler = (event) => {
-    const value = event.target.value;
-    const name = event.target.name;
-    const type = event.target.type;
-    const check = event.target.checked;
-
-    this.setState((prevState) => ({
-      ...prevState,
-      login: {
-        ...prevState.login,
-        [name]: type === "checkbox" ? check : value,
-      },
-    }));
-
-    if (this.state.login.username && this.state.login.password) {
-      this.setState({
-        bntEnable: false,
-      });
-    }
-  };
-
-  buttonClickHandler = () => {
-    this.props.onLogin(this.state.login);
-  };
-
+class Container extends react.Component {
   render() {
     return (
-      <div>
-        <input
-          name="username"
-          value={this.state.login.username}
-          onChange={this.inputChangeHandler}
-        />
-        <input
-          name="password"
-          type="password"
-          value={this.state.login.password}
-          onChange={this.inputChangeHandler}
-        />
-        <input
-          name="remember"
-          type="checkbox"
-          checked={this.state.login.remember}
-          onChange={this.inputChangeHandler}
-        />
-
-        <button
-          style={{
-            backgroundColor:
-              this.state.login.password.length >= 8 ? "green" : "red",
-          }}
-          disabled={this.state.login.bntEnable}
-          onClick={this.buttonClickHandler}
-        >
-          Login
-        </button>
+      <div className="bg-red-500 border-2 border-blue-800">
+        {this.props.children}
       </div>
     );
   }
