@@ -1,12 +1,21 @@
 import React from "react";
-import "./main.css";
 
 export class App extends React.Component {
   render() {
     return (
-      <TodoList>
-        trythis=
-        {(items) => {
+      <TodoList
+        render={(items) => {
+          const RemoveBtnHandler = (event) => {
+            const index = event.target.id;
+            let newArray = items;
+
+            newArray.splice(index, 1);
+
+            this.setState({
+              items: newArray,
+            });
+          };
+
           return (
             <div>
               <ul>
@@ -14,7 +23,7 @@ export class App extends React.Component {
                   <div>
                     <li key={index}>{item}</li>
                     {
-                      <button id={index} onClick={this.RemoveBtnHandler}>
+                      <button id={index} onClick={RemoveBtnHandler}>
                         Remove
                       </button>
                     }
@@ -24,7 +33,7 @@ export class App extends React.Component {
             </div>
           );
         }}
-      </TodoList>
+      ></TodoList>
     );
   }
 }
@@ -53,21 +62,10 @@ class TodoList extends React.Component {
     });
   };
 
-  RemoveBtnHandler = (event) => {
-    const index = event.target.id;
-    let newArray = this.state.items;
-
-    newArray.splice(index, 1);
-
-    this.setState({
-      items: newArray,
-    });
-  };
-
   render() {
     return (
       <div>
-        {this.props.trythis(this.state.items)}
+        {this.props.render(this.state.items)}
 
         <form onSubmit={this.SubmitEventHandler}>
           <input name="todoElement" />
