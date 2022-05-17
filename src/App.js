@@ -5,10 +5,11 @@ import { createContext } from "react";
 const languageContext = createContext("en");
 export class App extends react.Component {
   state = {
-    language: "",
+    language: "en",
   };
 
   languageChangeHandler = (event) => {
+    console.log(event);
     this.setState({
       language: event.target.value,
     });
@@ -37,8 +38,16 @@ class DisplayLanguage extends react.Component {
       <div className="bg-red-500 border-2 border-blue-800">
         <languageContext.Consumer>
           {(language) => {
-            console.log(language);
-            return <div>{language === "it" ? "Ciao!" : "Hi!"}</div>;
+            return (
+              <div>
+                <h1>
+                  {language === "it"
+                    ? "Lingua selezionata: "
+                    : "Language selected: "}
+                  {language}
+                </h1>
+              </div>
+            );
           }}
         </languageContext.Consumer>
       </div>
