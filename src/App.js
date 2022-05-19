@@ -1,7 +1,9 @@
-export function Welcome({ name = "World" }) {
+export function Sum({ numbers }) {
   return (
     <div>
-      <h1>Welcome {name}</h1>
+      <h1>
+        Result: {numbers.reduce((prev, currentValue) => prev + currentValue)}
+      </h1>
     </div>
   );
 }
