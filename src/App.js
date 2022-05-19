@@ -1,67 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+function changeFunction(number) {
+  console.log(`Counter has changed. Current value is ${number}`);
+}
 
 export function App() {
-  function onLogin(data) {
-    console.log(data);
-  }
   return (
     <div>
-      <Login onLogin={onLogin} />
+      <Counter onCounterChange={changeFunction} />
     </div>
   );
 }
 
-function Login({ onLogin }) {
-  const [data, setData] = useState({
-    username: "",
-    password: "",
-    remember: false,
-  });
+function Counter({ onCounterChange }) {
+  const [counter, setCounter] = useState(0);
 
-  function inputChangeHandler(event) {
-    const value = event.target.value;
-    const name = event.target.name;
-    const type = event.target.type;
-    const check = event.target.checked;
-
-    setData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? check : value,
-    }));
+  function clickEventHandler() {
+    setCounter((counter) => counter + 1);
   }
 
-  function buttonClickHandler() {
-    onLogin(data);
-  }
+  useEffect(() => {
+    onCounterChange(counter);
+  }, [counter, onCounterChange]);
 
-  function Button({ btnDisable = true }) {
-    return (
-      <button disabled={btnDisable} onClick={buttonClickHandler}>
-        Login
-      </button>
-    );
-  }
   return (
     <div>
-      <input
-        name="username"
-        value={data.username}
-        onChange={inputChangeHandler}
-      />
-      <input
-        name="password"
-        type="password"
-        value={data.password}
-        onChange={inputChangeHandler}
-      />
-      <input
-        name="remember"
-        type="checkbox"
-        checked={data.remember}
-        onChange={inputChangeHandler}
-      />
-
-      <Button btnDisable={!(data.username.length && data.password.length)} />
+      <h1>Count: {counter}</h1>
+      <button onClick={clickEventHandler}>Click!</button>
     </div>
   );
 }
