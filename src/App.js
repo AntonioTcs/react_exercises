@@ -1,4 +1,4 @@
-export function Sum({ numbers }) {
+export function Sum({ numbers = [0] }) {
   return (
     <div>
       <h1>
