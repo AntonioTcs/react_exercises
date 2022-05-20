@@ -21,10 +21,7 @@ function Counter() {
   useEffect(() => {
     console.log("Component mounted and interval is going to start");
     const interval = setInterval(() => {
-      setCount((c) => {
-        c = c + 1;
-        console.log(c);
-      });
+      setCount((c) => c + 1);
     }, 1000);
 
     return () => {
