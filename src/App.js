@@ -28,7 +28,9 @@ function Counter() {
 
     return () => {
       console.log("Clearing interval");
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
     };
   }, []);
 
