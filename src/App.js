@@ -1,28 +1,14 @@
-import { useEffect, useState } from "react";
+import { useCounter } from "./useCounter";
 
-export function App() {
-  return <GitHubUser username={"AntonioTcs"} />;
-}
-
-function GitHubUser({ username }) {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${username}`)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        setData(data);
-        console.log(data);
-      });
-  }, [username]);
+export function App({ initialvalue = 0 }) {
+  const { counter, increment, decrement, reset } = useCounter(initialvalue);
 
   return (
     <div>
-      <h1>{`User: ${data.name} `}</h1>
-      <h3>{`Bio: ${data.bio} `}</h3>
+      <h1>Count: {counter}</h1>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
