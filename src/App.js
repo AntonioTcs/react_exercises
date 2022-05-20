@@ -1,7 +1,21 @@
 import { useEffect, useState } from "react";
 
 export function App() {
-  return <GitHubUser username={"AntonioTcs"} />;
+  const [userList, addUser] = useState([]);
+  const [user, updateUser] = useState("");
+
+  function updateInput(event) {
+    const value = event.target.value;
+    updateUser(value);
+  }
+
+  return (
+    <div>
+      <input value={user} onChange={updateInput} />
+      {/* <button type="button" onClick={} /> */}
+      <GitHubUserList userList={userList} />;
+    </div>
+  );
 }
 function fetchUser({ username }) {
   fetch(`https://api.github.com/users/${username}`)
