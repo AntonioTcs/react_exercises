@@ -1,55 +1,70 @@
 import { useEffect, useState } from "react";
 
 export function App() {
-  const [userList, addUser] = useState([]);
   const [user, updateUser] = useState("");
+  const [userList, updateUserList] = useState([]);
+  const [render, setRender] = useState(false);
 
   function updateInput(event) {
     const value = event.target.value;
     updateUser(value);
   }
 
+  function updateList() {
+    setRender(true);
+    updateUserList([...userList, user]);
+    updateUser("");
+    setTimeout(() => setRender(false), 1);
+  }
+
   return (
     <div>
       <input value={user} onChange={updateInput} />
-      {/* <button type="button" onClick={} /> */}
-      <GitHubUserList userList={userList} />;
+      <button type="button" onClick={updateList}>
+        Add User
+      </button>
+      {render && <GitHubUserList userList={userList} />}
     </div>
   );
 }
-function fetchUser({ username }) {
-  fetch(`https://api.github.com/users/${username}`)
-    .then((response) => {
-      console.log(response);
-      return response.json();
-    })
-    .then((data) => {
-      return data;
-    });
+
+async function fetchData(username) {
+  const userFetched = await fetch(`https://api.github.com/users/${username}`)
+    .then((response) => response.json())
+    .then((data) => data);
+
+  return await userFetched;
 }
 
-function GitHubUserList(userList) {
-  const [data, setData] = useState(null);
+function GitHubUserList({ userList }) {
+  const [fetchedData, setFetchedData] = useState("");
+  const lastUser = userList[userList.length - 1];
 
   useEffect(() => {
-    userList.foreach((username) => {
-      const user = fetchUser(data.username);
-      setData((data) => data.push(user));
-      console.log(data);
-    });
-  }, [data, userList]);
+    async function waitFetch() {
+      const fetchedUser = lastUser
+        ? await fetchData(lastUser)
+        : "User must be over 2 char";
+      setFetchedData(await fetchedUser.name);
+      setTimeout(() => {
+        console.log(fetchedData);
+      }, 2000);
+    }
 
-  return <GitHubUser userFetchedArray={data} />;
+    waitFetch();
+  }, [fetchedData, userList, lastUser]);
+
+  return <div>{/* <GitHubUser userFetchedArray={data} /> */}</div>;
 }
-
+/* 
 function GitHubUser(userFetchedArray) {
   return (
     <div>
-      {userFetchedArray.map((user) => {
+      {userFetchedArray.map((user) => (
         <div>
           <h1>{`User: ${user.name}`}</h1>
-        </div>;
-      })}
+        </div>
+      ))}
     </div>
   );
-}
+} */
