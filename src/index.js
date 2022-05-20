@@ -1,14 +1,19 @@
 import react from "react";
 import ReactDOM from "react-dom";
 
-class HelloInDiv extends react.Component {
+class App extends react.Component {
   render() {
     return (
       <div>
-        <h1>Hello!</h1>
+        <HelloInDiv />
       </div>
     );
   }
 }
+class HelloInDiv extends react.Component {
+  render() {
+    return <h1>Hello!</h1>;
+  }
+}
 
-ReactDOM.render(<HelloInDiv />, document.querySelector("#root"));
+ReactDOM.render(<App />, document.querySelector("#root"));
