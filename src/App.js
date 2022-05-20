@@ -1,32 +1,28 @@
 import { useEffect, useState } from "react";
 
-function changeFunction(number) {
-  console.log(`Counter has changed. Current value is ${number}`);
-}
-
 export function App() {
-  return (
-    <div>
-      <Counter onCounterChange={changeFunction} />
-    </div>
-  );
+  return <GitHubUser username={"AntonioTcs"} />;
 }
 
-function Counter({ onCounterChange }) {
-  const [counter, setCounter] = useState(0);
-
-  function clickEventHandler() {
-    setCounter((counter) => counter + 1);
-  }
+function GitHubUser({ username }) {
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    onCounterChange(counter);
-  }, [counter, onCounterChange]);
+    fetch(`https://api.github.com/users/${username}`)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      });
+  }, [username]);
 
   return (
     <div>
-      <h1>Count: {counter}</h1>
-      <button onClick={clickEventHandler}>Click!</button>
+      <h1>{`User: ${data.name} `}</h1>
+      <h3>{`Bio: ${data.bio} `}</h3>
     </div>
   );
 }
