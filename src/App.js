@@ -37,7 +37,7 @@ async function fetchData(username) {
 }
 
 function GitHubUserList({ userList }) {
-  const [fetchedData, setFetchedData] = useState("");
+  const [fetchedData, setFetchedData] = useState(null);
   const lastUser = userList[userList.length - 1];
 
   useEffect(() => {
@@ -45,11 +45,13 @@ function GitHubUserList({ userList }) {
       const fetchedUser = lastUser
         ? await fetchData(lastUser)
         : "User must be over 2 char";
-      setFetchedData(await fetchedUser);
+      console.log(fetchedUser);
+      setFetchedData(fetchedUser);
+      console.log(fetchedData);
     }
 
     waitFetch();
-  }, [lastUser]);
+  }, [lastUser, fetchedData]);
 
   return <div>{/* <GitHubUser userFetchedArray={data} /> */}</div>;
 }
