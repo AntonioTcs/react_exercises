@@ -12,7 +12,7 @@ class Greets extends React.Component {
             <strong>Franco</strong>
           )}
         </p>
-        <Age age={this.props.age} />
+        {this.props.age && <Age age={this.props.age} />}
       </div>
     );
   }
@@ -20,7 +20,7 @@ class Greets extends React.Component {
 
 class Age extends React.Component {
   render() {
-    return this.props.age ? <p>Your age is {this.props.age}</p> : null;
+    return <p>Your age is {this.props.age}</p>;
   }
 }
 export default Greets;
