@@ -45,14 +45,11 @@ function GitHubUserList({ userList }) {
       const fetchedUser = lastUser
         ? await fetchData(lastUser)
         : "User must be over 2 char";
-      setFetchedData(await fetchedUser.name);
-      setTimeout(() => {
-        console.log(fetchedData);
-      }, 2000);
+      setFetchedData(await fetchedUser);
     }
 
     waitFetch();
-  }, [fetchedData, userList, lastUser]);
+  }, [lastUser]);
 
   return <div>{/* <GitHubUser userFetchedArray={data} /> */}</div>;
 }
