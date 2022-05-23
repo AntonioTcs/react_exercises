@@ -1,28 +1,19 @@
-import { useEffect, useState } from "react";
+import { useForm } from "./useForm";
 
 export function App() {
-  return <GitHubUser username={"AntonioTcs"} />;
+  return <Form />;
 }
 
-function GitHubUser({ username }) {
-  const [data, setData] = useState(null);
+function Form() {
+  const { user, handleInputChange } = useForm;
 
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${username}`)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        setData(data);
-        console.log(data);
-      });
-  }, [username]);
-
+  function handleChange(event) {
+    handleInputChange(event);
+  }
   return (
     <div>
-      <h1>{`User: ${data.name} `}</h1>
-      <h3>{`Bio: ${data.bio} `}</h3>
+      <input name="username" onChange={handleChange} />
+      <input type="password" name="password" onChange={handleChange} />
     </div>
   );
 }
