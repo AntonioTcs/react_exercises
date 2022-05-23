@@ -1,19 +1,14 @@
-import { useForm } from "./useForm";
+import { useCounter } from "./useCounter";
 
-export function App() {
-  return <Form />;
-}
+export function App({ initialvalue = 0 }) {
+  const { counter, increment, decrement, reset } = useCounter(initialvalue);
 
-function Form() {
-  const { user, handleInputChange } = useForm;
-
-  function handleChange(event) {
-    handleInputChange(event);
-  }
   return (
     <div>
-      <input name="username" onChange={handleChange} />
-      <input type="password" name="password" onChange={handleChange} />
+      <h1>Count: {counter}</h1>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
