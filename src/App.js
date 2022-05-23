@@ -7,5 +7,9 @@ export function App() {
 function GithubUser({ username }) {
   let { user, functionFetch } = useGithubUser(username);
 
-  return <div>{<h1>{user}</h1>}</div>;
+  return (
+    <div>
+      <h1>{user}</h1>
+    </div>
+  );
 }
