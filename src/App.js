@@ -1,19 +1,11 @@
-import { useForm } from "./useForm";
+import { useGithubUser } from "./useGithubUser";
 
 export function App() {
-  return <Form />;
+  return <GithubUser username="AntonioTcs" />;
 }
 
-function Form() {
-  const { user, handleInputChange } = useForm;
+function GithubUser({ username }) {
+  let { user, functionFetch } = useGithubUser(username);
 
-  function handleChange(event) {
-    handleInputChange(event);
-  }
-  return (
-    <div>
-      <input name="username" onChange={handleChange} />
-      <input type="password" name="password" onChange={handleChange} />
-    </div>
-  );
+  return <div>{<h1>{user}</h1>}</div>;
 }
