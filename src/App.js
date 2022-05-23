@@ -1,19 +1,31 @@
-import { useForm } from "./useForm";
-
+import { useEffect, useRef } from "react";
+const initialData = {
+  model: "Tesla",
+  color: "Blue",
+  year: "2018",
+};
 export function App() {
-  return <Form />;
+  return <Form intialData={initialData} />;
 }
 
-function Form() {
-  const { user, handleInputChange } = useForm;
+function Form({ intialData }) {
+  const model = useRef();
+  const color = useRef();
+  const year = useRef();
 
-  function handleChange(event) {
-    handleInputChange(event);
-  }
+  useEffect(() => {
+    model.current.value = intialData.model;
+    color.current.value = intialData.color;
+    year.current.value = intialData.year;
+  }, [intialData]);
+
   return (
     <div>
-      <input name="username" onChange={handleChange} />
-      <input type="password" name="password" onChange={handleChange} />
+      <form>
+        <input ref={model} name="model" />
+        <input ref={color} name="color" />
+        <input ref={year} type="number" name="year" />
+      </form>
     </div>
   );
 }
