@@ -6,7 +6,7 @@ export function App() {
   const [render, setRender] = useState(false);
 
   function updateInput(event) {
-    const value = event.target.value;
+    const value = event.target.value.toLowerCase();
     updateUser(value);
   }
 
@@ -14,7 +14,6 @@ export function App() {
     setRender(true);
     updateUserList([...userList, user]);
     updateUser("");
-    setTimeout(() => setRender(false), 1);
   }
 
   return (
@@ -28,42 +27,48 @@ export function App() {
   );
 }
 
-async function fetchData(username) {
-  const userFetched = await fetch(`https://api.github.com/users/${username}`)
-    .then((response) => response.json())
-    .then((data) => data);
-
-  return await userFetched;
-}
-
 function GitHubUserList({ userList }) {
-  const [fetchedData, setFetchedData] = useState(null);
-  const lastUser = userList[userList.length - 1];
+  const [fetchedUser, setFetchedUser] = useState([]);
+  const lastUser =
+    userList[userList.length - 1] === userList[userList.length - 2] ||
+    userList[userList.length - 1] === ""
+      ? null
+      : userList[userList.length - 1];
 
   useEffect(() => {
-    async function waitFetch() {
-      const fetchedUser = lastUser
-        ? await fetchData(lastUser)
-        : "User must be over 2 char";
-      console.log(fetchedUser);
-      setFetchedData(fetchedUser);
-      console.log(fetchedData);
+    if (lastUser != null) {
+      fetch(`https://api.github.com/users/${lastUser}`)
+        .then((response) => (response.status === 200 ? response.json() : null))
+        .then((json) => {
+          if (json) {
+            setFetchedUser((prevUsers) => [...prevUsers, json]);
+          } else {
+            alert("User Not Found");
+          }
+        });
     }
+  }, [lastUser]);
 
-    waitFetch();
-  }, [lastUser, fetchedData]);
-
-  return <div>{/* <GitHubUser userFetchedArray={data} /> */}</div>;
+  return <div>{<GitHubUser userFetched={fetchedUser} />}</div>;
 }
-/* 
-function GitHubUser(userFetchedArray) {
+
+function GitHubUser({ userFetched }) {
   return (
     <div>
-      {userFetchedArray.map((user) => (
-        <div>
-          <h1>{`User: ${user.name}`}</h1>
-        </div>
-      ))}
+      <div>
+        {userFetched.map((user, index) => {
+          return (
+            <div
+              key={index}
+              style={{ border: "2px solid red", backgroundColor: "aqua" }}
+            >
+              <h1>User: {user.login}</h1>
+              <h1>Name: {user.name}</h1>
+              <h2>Bio: {user.bio ? user.bio : "Questo utente non ha bio."}</h2>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
-} */
+}
