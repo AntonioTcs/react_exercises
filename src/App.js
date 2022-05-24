@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, useParams, Link } from "react-router-dom";
 
 export function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Welcome name="John" />} />
-
-      <Route path="users:username" element={<ShowGitHubUser />} />
-
-      <Route path="counter" element={<Counter />} />
-    </Routes>
+    <>
+      <Link to="/">Welcome</Link> ||
+      <Link to="/users">Fetch User</Link> ||
+      <Link to="/counter">One click game</Link>
+      <Routes>
+        <Route path="/" element={<Welcome name="John" />} />
+        <Route path="users:username" element={<ShowGitHubUser />} />
+        <Route path="users" element={<ShowGitHubUser />} />
+        <Route path="counter" element={<Counter />} />
+      </Routes>
+    </>
   );
 }
 
@@ -23,7 +27,23 @@ function Welcome({ name = "World" }) {
 
 function ShowGitHubUser() {
   const { username } = useParams();
-  return <GitHubUser username={username} />;
+  const [render, setRender] = useState(false);
+
+  useEffect(() => {
+    if (username) {
+      setRender(true);
+    }
+  }, []);
+
+  return (
+    <div>
+      {render ? (
+        <GitHubUser username={username} />
+      ) : (
+        <p>Insert user in the path</p>
+      )}
+    </div>
+  );
 }
 
 function GitHubUser({ username }) {
