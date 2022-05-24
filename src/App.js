@@ -26,6 +26,7 @@ function Welcome({ name = "World" }) {
     </div>
   );
 }
+
 function NotFound() {
   return (
     <div>
@@ -53,6 +54,31 @@ function ShowGitHubUser() {
       )}
     </div>
   );
+}
+
+function GitHubUserList({ userList }) {
+  const [fetchedUser, setFetchedUser] = useState([]);
+  const lastUser =
+    userList[userList.length - 1] === userList[userList.length - 2] ||
+    userList[userList.length - 1] === ""
+      ? null
+      : userList[userList.length - 1];
+
+  useEffect(() => {
+    if (lastUser != null) {
+      fetch(`https://api.github.com/users/${lastUser}`)
+        .then((response) => (response.status === 200 ? response.json() : null))
+        .then((json) => {
+          if (json) {
+            setFetchedUser((prevUsers) => [...prevUsers, json]);
+          } else {
+            alert("User Not Found");
+          }
+        });
+    }
+  }, [lastUser]);
+
+  return <div></div>;
 }
 
 function GitHubUser({ username }) {
