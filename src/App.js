@@ -12,6 +12,7 @@ export function App() {
         <Route path="users:username" element={<ShowGitHubUser />} />
         <Route path="users" element={<ShowGitHubUser />} />
         <Route path="counter" element={<Counter />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
@@ -21,6 +22,13 @@ function Welcome({ name = "World" }) {
   return (
     <div>
       <h1>Welcome {name}</h1>
+    </div>
+  );
+}
+function NotFound() {
+  return (
+    <div>
+      <h1>Sorry path not found</h1>
     </div>
   );
 }
