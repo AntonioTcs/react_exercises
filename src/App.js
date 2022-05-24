@@ -5,11 +5,12 @@ export function App() {
 }
 
 function GithubUser({ username }) {
-  let { user } = useGithubUser(username);
-  console.log(user);
+  const { user } = useGithubUser(username);
+
   return (
     <div>
-      <h1>User: {user}</h1>
+      {!user && <h1>Loading...</h1>}
+      {user && <h1>User: {user.name}</h1>}
     </div>
   );
 }
