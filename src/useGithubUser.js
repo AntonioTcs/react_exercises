@@ -1,10 +1,12 @@
-export function useGithubUser(username) {
-  async function fetchFunc() {
-    let response = await fetch(`https://api.github.com/users/${username}`);
-    let data = response.json();
-    return data;
-  }
+import { useEffect, useState } from "react";
 
-  const result = fetchFunc();
-  return { result: result, functionFetch: fetchFunc };
+export function useGithubUser(username) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://api.github.com/users/${username}`)
+      .then((response) => response.json())
+      .then((json) => setData(json));
+  }, []);
+  return { result: data };
 }
