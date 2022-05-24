@@ -9,8 +9,9 @@ export function App() {
       <Link to="/counter">One click game</Link>
       <Routes>
         <Route path="/" element={<Welcome name="John" />} />
-        <Route path="users:username" element={<ShowGitHubUser />} />
-        <Route path="users" element={<ShowGitHubUser />} />
+        <Route path="users" element={<ShowGitHubUser />}>
+          <Route path=":username" element={<ShowGitHubUser />} />
+        </Route>
         <Route path="counter" element={<Counter />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -41,7 +42,7 @@ function ShowGitHubUser() {
     if (username) {
       setRender(true);
     }
-  }, []);
+  }, [username]);
 
   return (
     <div>
@@ -56,21 +57,43 @@ function ShowGitHubUser() {
 
 function GitHubUser({ username }) {
   const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    setError(false);
+    setLoading(true);
+
     fetch(`https://api.github.com/users/${username}`)
       .then((response) => {
+        if (response.status !== 200) {
+          setError(true);
+          return null;
+        }
+
         return response.json();
       })
-      .then((data) => {
-        setData(data);
+      .then((json) => {
+        setData(json);
+        setLoading(false);
       });
   }, [username]);
 
   return (
     <div>
-      <h1>{`User: ${data.name} `}</h1>
-      <h3>{`Bio: ${data.bio} `}</h3>
+      {isLoading && <h1>Loading...</h1>}
+      {data && !error && (
+        <div>
+          <h1>User: {data.name}</h1>{" "}
+          <h2>Bio: {data.bio ? data.bio : "Bio not found"}</h2>
+        </div>
+      )}
+      {error && (
+        <h1>
+          There was an error during the request. Make sure you wrote the right
+          username
+        </h1>
+      )}
     </div>
   );
 }
