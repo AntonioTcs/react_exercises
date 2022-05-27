@@ -9,8 +9,8 @@ export function App() {
       <Link to="/counter">One click game</Link>
       <Routes>
         <Route path="/" element={<Welcome name="John" />} />
-        <Route path="users" element={<ShowGitHubUser />}>
-          <Route path=":username" element={<ShowGitHubUser />} />
+        <Route path="users" element={<GitHubUserList />}>
+          <Route path="AntonioTcs" element={<ShowGitHubUser />} />
         </Route>
         <Route path="counter" element={<Counter />} />
         <Route path="*" element={<NotFound />} />
@@ -35,91 +35,36 @@ function NotFound() {
   );
 }
 
-function ShowGitHubUser() {
-  const { username } = useParams();
-  const [render, setRender] = useState(false);
-
-  useEffect(() => {
-    if (username) {
-      setRender(true);
-    }
-  }, [username]);
-
+function ShowGitHubUser({ userList }) {
   return (
     <div>
-      {render ? (
-        <GitHubUser username={username} />
-      ) : (
-        <p>Insert user in the path</p>
-      )}
+      {userList.map((user) => (
+        <div>
+          <h1>Name: {user.name}</h1>
+          <h2>Bio: {user.bio}</h2>
+        </div>
+      ))}
     </div>
   );
 }
 
-function GitHubUserList({ userList }) {
+function GitHubUserList() {
   const [fetchedUser, setFetchedUser] = useState([]);
-  const lastUser =
-    userList[userList.length - 1] === userList[userList.length - 2] ||
-    userList[userList.length - 1] === ""
-      ? null
-      : userList[userList.length - 1];
 
   useEffect(() => {
-    if (lastUser != null) {
-      fetch(`https://api.github.com/users/${lastUser}`)
-        .then((response) => (response.status === 200 ? response.json() : null))
-        .then((json) => {
-          if (json) {
-            setFetchedUser((prevUsers) => [...prevUsers, json]);
-          } else {
-            alert("User Not Found");
-          }
-        });
-    }
-  }, [lastUser]);
-
-  return <div></div>;
-}
-
-function GitHubUser({ username }) {
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    setError(false);
-    setLoading(true);
-
-    fetch(`https://api.github.com/users/${username}`)
-      .then((response) => {
-        if (response.status !== 200) {
-          setError(true);
-          return null;
-        }
-
-        return response.json();
-      })
+    fetch(`https://api.github.com/users/`)
+      .then((response) => (response.status === 200 ? response.json() : null))
       .then((json) => {
-        setData(json);
-        setLoading(false);
+        if (json) {
+          setFetchedUser((prevUsers) => [...prevUsers, json]);
+        }
       });
-  }, [username]);
+  }, []);
 
   return (
     <div>
-      {isLoading && <h1>Loading...</h1>}
-      {data && !error && (
-        <div>
-          <h1>User: {data.name}</h1>{" "}
-          <h2>Bio: {data.bio ? data.bio : "Bio not found"}</h2>
-        </div>
-      )}
-      {error && (
-        <h1>
-          There was an error during the request. Make sure you wrote the right
-          username
-        </h1>
-      )}
+      <ShowGitHubUser userList={fetchedUser} />
+      <Link to="AntonioTcs">ClickMe!</Link>
     </div>
   );
 }
