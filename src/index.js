@@ -1,11 +1,7 @@
 import { App } from "./App";
 import ReactDOM from "react-dom";
 import { store } from "./state/Store";
-import {
-  decrementCounter,
-  incrementCounter,
-  resetCounter,
-} from "./state/Counter";
+import { addTodos, editTodos, removeTodos } from "./state/Todos";
 
 let rootElement = document.querySelector("#root");
 
@@ -14,8 +10,8 @@ ReactDOM.render(<App />, rootElement);
 store.subscribe(() => {
   console.log(store.getState());
 });
-store.dispatch(incrementCounter(5));
-store.dispatch(incrementCounter(5));
-store.dispatch(incrementCounter(5));
-store.dispatch(decrementCounter(5));
-store.dispatch(resetCounter());
+
+store.dispatch(addTodos({ id: 1, title: "Go to the Gym", completed: false }));
+store.dispatch(addTodos({ id: 2, title: "Go to the shop", completed: true }));
+store.dispatch(removeTodos(2));
+store.dispatch(editTodos(1, { completed: true }));
