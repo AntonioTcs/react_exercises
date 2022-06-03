@@ -9,7 +9,7 @@ let rootElement = document.querySelector("#root");
 ReactDOM.render(<App />, rootElement);
 
 store.subscribe(() => {
-  console.log(store.getState());
+  console.log("I'm changing state", store.getState());
 });
 
 store.dispatch(addTodos({ id: 1, title: "Go to the Gym", completed: false }));
