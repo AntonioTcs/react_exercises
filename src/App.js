@@ -1,26 +1,86 @@
-import { useGithubUser } from "./useGithubUser";
+import { useEffect, useState } from "react";
+import { Routes, Route, useParams, Link } from "react-router-dom";
 
 export function App() {
   return (
+    <>
+      <Link to="/">Welcome</Link> ||
+      <Link to="/users">Fetch User</Link> ||
+      <Link to="/counter">One click game</Link>
+      <Routes>
+        <Route path="/" element={<Welcome name="John" />} />
+        <Route path="users" element={<GitHubUserList />}>
+          <Route path=":username" element={<ShowGitHubUser />} />
+        </Route>
+        <Route path="counter" element={<Counter />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
+}
+
+function Welcome({ name = "World" }) {
+  return (
     <div>
-      <GithubUserFetched />
+      <h1>Welcome {name}</h1>
     </div>
   );
 }
 
-function GithubUserFetched() {
-  const { result, error } = useGithubUser("");
+function NotFound() {
   return (
     <div>
-      {!result && !error && (
-        <h1>Loading... If it takes long make sure you insert username</h1>
+      <h1>Sorry path not found</h1>
+    </div>
+  );
+}
+
+function ShowGitHubUser() {
+  const { username = "AntonioTcs" } = useParams();
+  console.log(username);
+  return (
+    <div>
+      <h1>{username}</h1>
+      <GitHubUserList username={username} />
+    </div>
+  );
+}
+
+function GitHubUserList({ username }) {
+  const [fetchedUser, setFetchedUser] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://api.github.com/users/${username}`)
+      .then((response) => (response.status === 200 ? response.json() : null))
+      .then((json) => {
+        if (json) {
+          setFetchedUser(json);
+        }
+      });
+  }, [username]);
+
+  return (
+    <div>
+      {username && fetchedUser ? (
+        <h1>Name : {fetchedUser.name}</h1>
+      ) : (
+        <h1>Loading</h1>
       )}
-      {result && !error && (
-        <div>
-          <h1>Name: {result.name}</h1> <h2>Bio: {result.bio}</h2>
-        </div>
-      )}
-      {error && <h1>Sorry there was an eror</h1>}
+    </div>
+  );
+}
+
+export function Counter() {
+  const [counter, setCounter] = useState(0);
+
+  function clickEventHandler() {
+    setCounter((counter) => counter + 1);
+  }
+
+  return (
+    <div>
+      <h1>Count: {counter}</h1>
+      <button onClick={clickEventHandler}>Click!</button>
     </div>
   );
 }
