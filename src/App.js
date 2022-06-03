@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useParams, Link } from "react-router-dom";
+import { Routes, Route, useParams, Link, Outlet } from "react-router-dom";
 
 export function App() {
   return (
@@ -37,33 +37,64 @@ function NotFound() {
 
 function ShowGitHubUser() {
   const { username = "AntonioTcs" } = useParams();
-  console.log("Hello", username);
   return (
     <div>
-      <h1>{username}</h1>
-      <GitHubUserList username={username} />
-      <h1>Caio</h1>
+      <GitHubUser username={username} />
     </div>
   );
 }
 
-function GitHubUserList({ username }) {
+function GitHubUser({ username }) {
   const [fetchedUser, setFetchedUser] = useState([]);
 
   useEffect(() => {
-    console.log("Ciao", username);
-    fetch(`https://api.github.com/users/${username}`)
-      .then((response) => (response.status === 200 ? response.json() : null))
-      .then((json) => {
-        if (json) {
-          setFetchedUser(json);
-        }
-      });
+    if (username != null) {
+      fetch(`https://api.github.com/users/${username}`)
+        .then((response) => (response.status === 200 ? response.json() : null))
+        .then((json) => {
+          if (json) {
+            setFetchedUser(json);
+          } else {
+            alert("User Not Found");
+          }
+        });
+    }
   }, [username]);
 
   return (
     <div>
       <h1>Name : {fetchedUser.name}</h1>
+    </div>
+  );
+}
+
+function GitHubUserList({ userFetched }) {
+  const [array, setArray] = useState([]);
+  const [user, setUser] = useState();
+
+  function handleChange(event) {
+    const value = event.target.value;
+    setUser(value);
+  }
+  function handleBtnClick() {
+    setArray([...array, user]);
+  }
+  return (
+    <div>
+      <p>Inserisci Utente:</p>
+      <input name="username" value={user} onChange={handleChange} />
+      <button onClick={handleBtnClick}>Add user</button>
+      <div>
+        {array.map((user, index) => (
+          <div
+            key={index}
+            style={{ border: "2px solid red", backgroundColor: "aqua" }}
+          >
+            <Link to={`${user}`}>{user}</Link>
+          </div>
+        ))}
+        <Outlet />
+      </div>
     </div>
   );
 }
