@@ -23,7 +23,7 @@ function FilteredList({ objList }) {
           </div>
         ) : null
       ),
-    []
+    [list]
   );
   return <div>{listToRender}</div>;
 }
