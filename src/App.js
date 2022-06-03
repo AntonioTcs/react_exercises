@@ -10,7 +10,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Welcome name="John" />} />
         <Route path="users" element={<GitHubUserList />}>
-          <Route path="AntonioTcs" element={<ShowGitHubUser />} />
+          <Route path=":username" element={<ShowGitHubUser />} />
         </Route>
         <Route path="counter" element={<Counter />} />
         <Route path="*" element={<NotFound />} />
@@ -35,36 +35,35 @@ function NotFound() {
   );
 }
 
-function ShowGitHubUser({ userList }) {
+function ShowGitHubUser() {
+  const { username = "AntonioTcs" } = useParams();
+  console.log("Hello", username);
   return (
     <div>
-      {userList.map((user) => (
-        <div>
-          <h1>Name: {user.name}</h1>
-          <h2>Bio: {user.bio}</h2>
-        </div>
-      ))}
+      <h1>{username}</h1>
+      <GitHubUserList username={username} />
+      <h1>Caio</h1>
     </div>
   );
 }
 
-function GitHubUserList() {
+function GitHubUserList({ username }) {
   const [fetchedUser, setFetchedUser] = useState([]);
 
   useEffect(() => {
-    fetch(`https://api.github.com/users/`)
+    console.log("Ciao", username);
+    fetch(`https://api.github.com/users/${username}`)
       .then((response) => (response.status === 200 ? response.json() : null))
       .then((json) => {
         if (json) {
-          setFetchedUser((prevUsers) => [...prevUsers, json]);
+          setFetchedUser(json);
         }
       });
-  }, []);
+  }, [username]);
 
   return (
     <div>
-      <ShowGitHubUser userList={fetchedUser} />
-      <Link to="AntonioTcs">ClickMe!</Link>
+      <h1>Name : {fetchedUser.name}</h1>
     </div>
   );
 }
