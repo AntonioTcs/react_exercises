@@ -9,7 +9,7 @@ export function App() {
 }
 
 function GithubUserFetched() {
-  const { result, error } = useGithubUser("");
+  const { result, error, refresh } = useGithubUser("AntonioTcs");
   return (
     <div>
       {!result && !error && (
@@ -21,6 +21,7 @@ function GithubUserFetched() {
         </div>
       )}
       {error && <h1>Sorry there was an eror</h1>}
+      <button onClick={refresh}>Refresh</button>
     </div>
   );
 }
